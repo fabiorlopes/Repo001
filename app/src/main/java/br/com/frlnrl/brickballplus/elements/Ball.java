@@ -33,8 +33,8 @@ public class Ball {
     private float X;
     private float Y;
     private float Xdestino;
-    private double speedOfX = 20;
-    private double speedOfY = -20;
+    private double speedOfX = 25;
+    private double speedOfY = -25;
     private boolean emMovimento;
     private int qtdBounce;
 
