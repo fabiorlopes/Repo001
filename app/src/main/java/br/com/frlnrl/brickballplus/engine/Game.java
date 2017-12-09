@@ -39,6 +39,7 @@ public class Game extends SurfaceView implements Runnable {
     private int topBack;
     private boolean gameOver;
     private Paint gameOverColor;
+    private Controles controles;
 
     public Game(Context context) {
         super(context);
@@ -47,7 +48,7 @@ public class Game extends SurfaceView implements Runnable {
 
         surfaceHolder = getHolder();
 
-        Controles controles = new Controles(context);
+        controles = new Controles(context);
         controles.setGame(this);
         setOnTouchListener(controles);
 
@@ -57,7 +58,7 @@ public class Game extends SurfaceView implements Runnable {
     private void inicializaElementos() {
         this.tela = new Tela(context);
         this.bricks = new Bricks(tela, context, this);
-        this.balls = new Balls(tela, bricks);
+        this.balls = new Balls(tela, bricks, controles);
         this.bricks.setBalls(this.balls);
         this.cc = new ControleDeColisao(balls, bricks);
         this.background = Bitmap.createScaledBitmap(decodeBackground(), tela.getLargura(), tela.getAlturaTabuleiro(), false);
@@ -94,7 +95,7 @@ public class Game extends SurfaceView implements Runnable {
 
             //bolas
             balls.bounce();
-            if (gameOver){
+            if (gameOver) {
                 canvas.drawBitmap(backgroundFull, 0, 0, null);
                 canvas.drawText("GameOver", tela.getLargura() / 2, tela.getAltura() / 2, gameOverColor);
                 pausar();

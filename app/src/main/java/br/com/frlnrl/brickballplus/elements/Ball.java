@@ -37,11 +37,16 @@ public class Ball {
     private double speedOfY = -20;
     private boolean emMovimento;
     private int qtdBounce;
-    private int hit;
-    private boolean garagem;
 
+    private int hit;
+
+    private boolean garagem;
     float getX() {
         return X;
+    }
+
+    public int getHit() {
+        return hit;
     }
 
     private final String TAG = "Ball:";
@@ -152,6 +157,7 @@ public class Ball {
             }
         }else {
             garagem = false;
+            Brick.totalHits = 0;
         }
 //        Log.d(TAG, "trataRetornoAGaragem: id=" + id + " - XDestino=" + Xdestino + " - X=" + X);
     }

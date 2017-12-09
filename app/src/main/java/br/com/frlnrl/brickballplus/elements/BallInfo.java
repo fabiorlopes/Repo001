@@ -8,10 +8,17 @@ import java.util.UUID;
 
 public class BallInfo {
     private int qtdBounce;
+
+    public int getQtdHit() {
+        return qtdHit;
+    }
+
+    private int qtdHit;
     private UUID id;
 
-    public BallInfo(int qtdBounce, UUID id) {
+    public BallInfo(int qtdBounce, int qtdHit, UUID id) {
         this.qtdBounce = qtdBounce;
+        this.qtdHit = qtdHit;
         this.id = id;
     }
 

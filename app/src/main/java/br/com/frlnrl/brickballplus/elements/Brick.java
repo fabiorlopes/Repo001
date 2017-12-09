@@ -46,6 +46,7 @@ public class Brick {
     private Rect rright;
     private int countOfAnimation;
     private Rect smallRect;
+    public static int totalHits;
 
     Brick(int coluna, int linha, boolean invisible, int hitpoints, boolean bolinha) {
         this.bolinha = bolinha;
@@ -71,17 +72,17 @@ public class Brick {
 
             rect = new Rect(x1, y1, x2, y2);
 
-            rtop = new Rect(x1 + 5, y1, x2 - 5, y1 + 5);
+            rtop = new Rect(x1 + 5, y1-5, x2 - 5, y1 + 5);
             rTopCorner1 = new Rect(x1, y1, x1 + 5, y1 + 5);
             rTopCorner2 = new Rect(x2 - 5, y1, x2, y1 + 5);
 
-            rbot = new Rect(x1 + 5, y2 - 5, x2 - 5, y2);
-            rBotCorner1 = new Rect(x1, y2, x1 + 5, y2 - 5);
-            rBotCorner2 = new Rect(x2, y2, x2 - 5, y2 - 5);
+            rbot = new Rect(x1 + 5, y2 - 5, x2 - 5, y2+5);
+            rBotCorner1 = new Rect(x1, y2, x1 - 5, y2 - 5);
+            rBotCorner2 = new Rect(x2-5, y2-5, x2, y2 );
 
 
-            rleft = new Rect(x1, y1 + 5, x1 + 5, y2 - 5);
-            rright = new Rect(x2 - 5, y1 + 5, x2, y2 - 5);
+            rleft = new Rect(x1-5, y1 + 5, x1 + 5, y2 - 5);
+            rright = new Rect(x2 - 5, y1 + 5, x2+5, y2 - 5);
         }
 
     }
@@ -92,8 +93,8 @@ public class Brick {
             canvas.drawRect(rect, cor);
             canvas.drawRect(rTopCorner1, corRectTop);
             canvas.drawRect(rTopCorner2, corRectTop);
-            canvas.drawRect(rBotCorner1, corRectBot);
-            canvas.drawRect(rBotCorner2, corRectBot);
+            canvas.drawRect(rBotCorner1, corRectTop);
+            canvas.drawRect(rBotCorner2, corRectTop);
             canvas.drawRect(rtop, corRectRight);
             canvas.drawRect(rleft, corRectLeft);
             canvas.drawRect(rbot, corRectRight);
@@ -132,6 +133,7 @@ public class Brick {
     public void hit() {
 
         hitPoints--;
+        totalHits++;
         tryToKill();
     }
 

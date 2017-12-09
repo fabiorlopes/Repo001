@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.frlnrl.brickballplus.engine.Controles;
 import br.com.frlnrl.brickballplus.engine.Tela;
 
 /**
@@ -23,10 +24,12 @@ public class Balls {
     private float xBallLider;
     private float yBallLider;
     private int shouldAddBall;
+    private final Controles controles;
 
-    public Balls(Tela tela, Bricks bricks) {
+    public Balls(Tela tela, Bricks bricks, Controles controles) {
         this.tela = tela;
         this.bricks = bricks;
+        this.controles = controles;
         for (int i = 0; i < numeroDeBolas; i++) {
             balls.add(new Ball(tela, this));
         }
@@ -87,6 +90,7 @@ public class Balls {
         }
         if (qtdDeBolasNoChao == numeroDeBolas){
             bricks.trataNovaFase();
+            controles.liberaDisparo();
             qtdDeBolasNoChao = 0;
         }
     }

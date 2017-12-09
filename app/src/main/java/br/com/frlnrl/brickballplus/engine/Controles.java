@@ -17,6 +17,7 @@ public class Controles implements View.OnTouchListener, GestureDetector.OnGestur
     private boolean onfling;
     private boolean onScroll;
     private Game game;
+    private boolean okParaDisparar = true;
 
     public Controles(Context context) {
         gestureDetector = new GestureDetector(context, this);
@@ -41,7 +42,9 @@ public class Controles implements View.OnTouchListener, GestureDetector.OnGestur
     public boolean onScroll(MotionEvent firstMotionEvent, MotionEvent lastMotionEvent, float v, float v1) {
         boolean bottomToTop = false;
         onScroll = true;
-        game.setStartLine(true);
+        if (okParaDisparar) {
+            game.setStartLine(true);
+        }
 
         float firstMotionEventX = firstMotionEvent.getX();
         float firstMotionEventY = firstMotionEvent.getY();
@@ -80,7 +83,7 @@ public class Controles implements View.OnTouchListener, GestureDetector.OnGestur
             bottomToTop = true;
         }
 
-        if (!bottomToTop){
+        if (!bottomToTop) {
             game.setAngle((int) getAngle(firstMotionEventX, firstMotionEventY, lastMotionEventX, lastMotionEventY));
             return false;
         }
@@ -97,23 +100,29 @@ public class Controles implements View.OnTouchListener, GestureDetector.OnGestur
 
         if (eventAction == MotionEvent.ACTION_UP) {
             if (onfling || onScroll) {
-                game.startBallsBounce();
-                //game.setAngle(0);
-                onScroll = false;
-                onfling = false;
-                game.setStartLine(false);
+                if (okParaDisparar) {
+                    game.startBallsBounce();
+                    okParaDisparar = false;
+                    //game.setAngle(0);
+                    onScroll = false;
+                    onfling = false;
+                    game.setStartLine(false);
+                }
             }
         }
         return true;
     }
 
-    void setGame(Game game){
+    void setGame(Game game) {
         this.game = game;
     }
 
     private double getAngle(float x1, float y1, float x2, float y2) {
-        double rad = Math.atan2(y1-y2,x2-x1) + Math.PI;
-        return ((rad*180/Math.PI + 180)%360) - 180;
+        double rad = Math.atan2(y1 - y2, x2 - x1) + Math.PI;
+        return ((rad * 180 / Math.PI + 180) % 360) - 180;
     }
 
+    public void liberaDisparo() {
+        okParaDisparar = true;
+    }
 }

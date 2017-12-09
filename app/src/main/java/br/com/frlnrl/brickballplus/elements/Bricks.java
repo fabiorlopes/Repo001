@@ -176,6 +176,7 @@ public class Bricks {
 
     public void desenhaNoCanvas(Canvas canvas) {
         canvas.drawText(String.valueOf(fase), 50, 100, corTexto);
+        canvas.drawText(String.valueOf(Brick.totalHits), 500, 100, corTexto);
         for (List<Brick> colunaDeBricks : linhasDeBricks) {
             for (Brick b : colunaDeBricks) {
                 b.desenhaNoCanvas(canvas);

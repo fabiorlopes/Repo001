@@ -86,7 +86,7 @@ class ControleDeColisao {
                 ball.alteraAngulo();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         } else if (brick.getrBotCorner2().intersects(ballRect.left, ballRect.top, ballRect.right, ballRect.bottom)) {
             if (!jaExisteColisao(ball, brick)) {
@@ -97,7 +97,7 @@ class ControleDeColisao {
                 ball.alteraAngulo();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         } else if (brick.getrTopCorner1().intersects(ballRect.left, ballRect.top, ballRect.right, ballRect.bottom)) {
             if (!jaExisteColisao(ball, brick)) {
@@ -108,7 +108,7 @@ class ControleDeColisao {
                 ball.alteraAngulo();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         }else if (brick.getrTopCorner2().intersects(ballRect.left, ballRect.top, ballRect.right, ballRect.bottom)) {
             if (!jaExisteColisao(ball, brick)) {
@@ -119,7 +119,7 @@ class ControleDeColisao {
                 ball.alteraAngulo();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         }else if (brick.getRleft().intersects(ballRect.left, ballRect.top, ballRect.right, ballRect.bottom)) {
             if (!jaExisteColisao(ball, brick)) {
@@ -128,7 +128,7 @@ class ControleDeColisao {
                 ball.mudaSinalX();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         } else if (brick.getRright().intersects(ballRect.left, ballRect.top, ballRect.right, ballRect.bottom)) {
             if (!jaExisteColisao(ball, brick)) {
@@ -137,7 +137,7 @@ class ControleDeColisao {
                 ball.mudaSinalX();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         }   else if (brick.getRtop().intersects(ballRect.left, ballRect.top, ballRect.right, ballRect.bottom)) {
             if (!jaExisteColisao(ball, brick)) {
@@ -146,7 +146,7 @@ class ControleDeColisao {
                 ball.mudaSinalY();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         } else if (brick.getRbot().intersects(ballRect.left, ballRect.top, ballRect.right, ballRect.bottom)) {
             if (!jaExisteColisao(ball, brick)) {
@@ -155,7 +155,7 @@ class ControleDeColisao {
                 ball.mudaSinalY();
                 brick.hit();
                 iterator.set(brick);
-                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getId()), new BrickInfo(brick.getId())));
+                paresDeColisao.add(new AbstractMap.SimpleEntry<>(new BallInfo(ball.getQtdBounce(), ball.getHit(), ball.getId()), new BrickInfo(brick.getId())));
             }
         }
     }
@@ -173,7 +173,8 @@ class ControleDeColisao {
                 Log.d(TAG, "ball.getQtdBounce()=" + ball.getQtdBounce());
                 Log.d(TAG, "bp.getQtdBounce()=" + bp.getQtdBounce());
                 //verifica se a colisao eh antiga, e desfaz ela
-                if (ball.getQtdBounce() > bp.getQtdBounce() + 3) {
+//                if (ball.getQtdBounce() > bp.getQtdBounce() + 3) {
+                if (ball.getHit() > bp.getQtdHit()) {
                     existeColisao = false;
                     simpleEntryListIterator.remove();
                 }
