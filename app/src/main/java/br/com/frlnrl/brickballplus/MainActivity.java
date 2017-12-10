@@ -41,6 +41,4 @@ public class MainActivity extends Activity {
         game.pausar();
         super.onPause();
     }
-
-
 }

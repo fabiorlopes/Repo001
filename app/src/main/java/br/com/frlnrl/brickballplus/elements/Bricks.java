@@ -95,22 +95,24 @@ public class Bricks {
 
     private void populaLinhas() {
 
-        //define o maximo de bricks a serem criados (2 a 7)
-        int max = random.nextInt(numeroDeColunas) + 2;
-        //todos começam invisiveis
-        boolean[] invisivel = { true, true, true, true, true, true, true };
+        //define o maximo de bricksInvisiveis a serem criados (0 a 6)
+        int max = random.nextInt(numeroDeColunas);
+        if (max < 2){ max = 2; }
+        //todos bricks começam invisiveis
+        boolean[] bricksInvisiveis = { true, true, true, true, true, true, true };
         //define quais sao visíveis
         for (int x = 0; x < max; x++){
-            invisivel[random.nextInt(numeroDeColunas)] = false;
+            bricksInvisiveis[random.nextInt(numeroDeColunas)] = false;
         }
 //        for (int x = 0; x < 7; x++) {
-//            Log.d(TAG, "populaLinhas: invisivel[" + x + "]" + invisivel[x]);
+//            Log.d(TAG, "populaLinhas: bricksInvisiveis[" + x + "]" + bricksInvisiveis[x]);
 //        }
-        //guarda as posicoes dos invisiveis para criar a bolinha extra
+        //'count' guarda a qtd de invisiveis para criar a bolinha extra
+        //'pi[]' guarda as posicoes invisiveis
         int count = 0;
         int pi[] = new int[7];
         for (int x = 0; x < 7; x++){
-            if (invisivel[x]){
+            if (bricksInvisiveis[x]){
                 pi[count] = x;
                 count++;
             }
@@ -123,9 +125,9 @@ public class Bricks {
         //Log.d(TAG, "populaLinhas: bolinha=" + bolinha);
         for (int i = 0; i < 7; i++) {
             if (i == pi[bolinha]){
-                linhasDeBricks.get(0).add(new Brick(i, 0, invisivel[i], fase, true));
+                linhasDeBricks.get(0).add(new Brick(i, 0, bricksInvisiveis[i], fase, true));
             }else {
-                linhasDeBricks.get(0).add(new Brick(i, 0, invisivel[i], fase, false));
+                linhasDeBricks.get(0).add(new Brick(i, 0, bricksInvisiveis[i], fase, false));
             }
         }
     }

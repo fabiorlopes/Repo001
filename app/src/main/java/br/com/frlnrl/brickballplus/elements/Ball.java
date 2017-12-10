@@ -22,7 +22,9 @@ public class Ball {
     private final Tela tela;
     private final float alturaDaTela;
     private final float larguraDaTela;
+
     private final float originalY;
+
     private final int displacement;
     private Balls balls;
     private final Paint corDaBola;
@@ -37,19 +39,22 @@ public class Ball {
     private double speedOfY = -25;
     private boolean emMovimento;
     private int qtdBounce;
-
     private int hit;
 
     private boolean garagem;
+
     float getX() {
         return X;
     }
-
     public int getHit() {
         return hit;
     }
 
     private final String TAG = "Ball:";
+
+    public float getOriginalY() {
+        return originalY;
+    }
 
     Ball(Tela tela, Balls balls) {
         this.id = UUID.randomUUID();

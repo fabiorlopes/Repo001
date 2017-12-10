@@ -1,6 +1,7 @@
 package br.com.frlnrl.brickballplus.elements;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ import br.com.frlnrl.brickballplus.engine.Tela;
 public class Balls {
     private static final String TAG = "Balls";
     private final Tela tela;
+    private final float yLabelQtdBolinhas;
+    private float xLabelQtdBolinhas;
     private Bricks bricks;
 
     private int qtdDeBolasNoChao = 0;
@@ -25,6 +28,7 @@ public class Balls {
     private float yBallLider;
     private int shouldAddBall;
     private final Controles controles;
+    private Paint corDaBolinha;
 
     public Balls(Tela tela, Bricks bricks, Controles controles) {
         this.tela = tela;
@@ -33,9 +37,13 @@ public class Balls {
         for (int i = 0; i < numeroDeBolas; i++) {
             balls.add(new Ball(tela, this));
         }
+        yLabelQtdBolinhas = balls.get(0).getOriginalY() - 32;
+        xLabelQtdBolinhas = balls.get(0).getX();
+        corDaBolinha = Cores.getCorBola();
     }
 
     public void desenhaNo(Canvas canvas) {
+        canvas.drawText("x" + String.valueOf(balls.size()), xLabelQtdBolinhas, yLabelQtdBolinhas, corDaBolinha);
         for (Ball ball : balls) {
             ball.desenhaNo(canvas);
         }
@@ -83,6 +91,7 @@ public class Balls {
         Log.d(TAG, "chegouNoChao: qtd=" + qtdDeBolasNoChao);
         if (qtdDeBolasNoChao == 1){
             xBallLider=  ball.getX();
+            xLabelQtdBolinhas = xBallLider;
         }
         if(qtdDeBolasNoChao >= 2){
             ball.defineLocalGaragem(xBallLider);

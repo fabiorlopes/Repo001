@@ -21,6 +21,7 @@ public class Cores {
 
     static Paint getCorBola() {
         paint = new Paint();
+        paint.setTextSize(38);
         paint.setColor(BRANCO);
         return paint;
     }
