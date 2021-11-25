@@ -34,8 +34,8 @@ public class Game extends SurfaceView implements Runnable {
     private Balls balls;
     private Bricks bricks;
     private Canvas canvas;
-    private ControleDeColisao cc;
-    private Tela tela;
+    private CollisionControl cc;
+    private Screen screen;
     private int topBack;
     private boolean gameOver;
     private Paint gameOverColor;
@@ -56,14 +56,14 @@ public class Game extends SurfaceView implements Runnable {
     }
 
     private void inicializaElementos() {
-        this.tela = new Tela(context);
-        this.bricks = new Bricks(tela, context, this);
-        this.balls = new Balls(tela, bricks, controles);
+        this.screen = new Screen(context);
+        this.bricks = new Bricks(screen, context, this, controles);
+        this.balls = new Balls(screen, bricks, controles);
         this.bricks.setBalls(this.balls);
-        this.cc = new ControleDeColisao(balls, bricks);
-        this.background = Bitmap.createScaledBitmap(decodeBackground(), tela.getLargura(), tela.getAlturaTabuleiro(), false);
-        this.backgroundFull = Bitmap.createScaledBitmap(decodeBackgroundGrey(), tela.getLargura(), tela.getAltura(), false);
-        this.topBack = (int) (tela.getAltura() * 0.08361204);
+        this.cc = new CollisionControl(balls, bricks);
+        this.background = Bitmap.createScaledBitmap(decodeBackground(), screen.getLargura(), screen.getAlturaTabuleiro(), false);
+        this.backgroundFull = Bitmap.createScaledBitmap(decodeBackgroundGrey(), screen.getLargura(), screen.getAltura(), false);
+        this.topBack = (int) (screen.getAltura() * 0.08361204);
         this.gameOverColor = Cores.getCorGameOver();
     }
 
@@ -97,15 +97,15 @@ public class Game extends SurfaceView implements Runnable {
             balls.bounce();
             if (gameOver) {
                 canvas.drawBitmap(backgroundFull, 0, 0, null);
-                canvas.drawText("GameOver", tela.getLargura() / 2, tela.getAltura() / 2, gameOverColor);
-                pausar();
+                canvas.drawText("GameOver", screen.getLargura() / 2, screen.getAltura() / 2, gameOverColor);
+                pause();
                 continue;
             }
             balls.desenhaNo(canvas);
             balls.desenhaMiraNo(canvas, angle, startLine);
 
             //Controle de colisao:
-            cc.controlaColisao();
+            cc.controlCollision();
 
             //coloca o canvas na tela:
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -117,7 +117,7 @@ public class Game extends SurfaceView implements Runnable {
         isRunning = true;
     }
 
-    public void pausar() {
+    public void pause() {
         isRunning = false;
     }
 

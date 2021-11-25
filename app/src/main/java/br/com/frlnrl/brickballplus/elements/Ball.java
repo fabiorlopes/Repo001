@@ -7,7 +7,7 @@ import android.util.Log;
 
 import java.util.UUID;
 
-import br.com.frlnrl.brickballplus.engine.Tela;
+import br.com.frlnrl.brickballplus.engine.Screen;
 
 /**
  * Created by Fabio on 20/10/2017.
@@ -19,8 +19,8 @@ public class Ball {
     public static final int UP = 111;
     private final UUID id;
 
-    private final Tela tela;
-    private final float alturaDaTela;
+    private final Screen screen;
+    public final float alturaDaTela;
     private final float larguraDaTela;
 
     private final float originalY;
@@ -56,20 +56,20 @@ public class Ball {
         return originalY;
     }
 
-    Ball(Tela tela, Balls balls) {
+    Ball(Screen screen, Balls balls) {
         this.id = UUID.randomUUID();
-        this.tela = tela;
-        this.X = tela.getLargura() / 2;
-        this.displacement = (int) (tela.getAltura() * 0.08361204);
-        this.originalY = this.Y = (tela.getAlturaTabuleiro() + displacement) - 32;
-        this.alturaDaTela = tela.getAlturaTabuleiro() + displacement;
-        this.larguraDaTela = tela.getLargura();
+        this.screen = screen;
+        this.X = screen.getLargura() / 2;
+        this.displacement = (int) (screen.getAltura() * 0.08361204);
+        this.originalY = this.Y = (screen.getAlturaTabuleiro() + displacement) - 32;
+        this.alturaDaTela = screen.getAlturaTabuleiro() + displacement;
+        this.larguraDaTela = screen.getLargura();
         this.balls = balls;
         this.corDaBola = Cores.getCorBola();
     }
 
-    Ball(Tela tela, Balls balls, float X){
-       this(tela, balls);
+    Ball(Screen screen, Balls balls, float X){
+       this(screen, balls);
        this.X = X;
     }
 

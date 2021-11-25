@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import br.com.frlnrl.brickballplus.engine.Controles;
 import br.com.frlnrl.brickballplus.engine.Game;
-import br.com.frlnrl.brickballplus.engine.Tela;
+import br.com.frlnrl.brickballplus.engine.Screen;
 
 /**
  * Created by Fabio on 01/11/2017.
@@ -18,7 +19,7 @@ import br.com.frlnrl.brickballplus.engine.Tela;
 
 public class Bricks {
     private static final String TAG = "Bricks";
-    private final Tela tela;
+    private final Screen screen;
     private final Context context;
     private Game game;
     private final Paint corTexto;
@@ -42,12 +43,12 @@ public class Bricks {
 
     private Balls balls;
 
-    public Bricks(Tela tela, Context context, Game game) {
-        this.tela = tela;
+    public Bricks(Screen screen, Context context, Game game, Controles controles) {
+        this.screen = screen;
         this.context = context;
         this.game = game;
         this.corTexto = Cores.getCorTexto();
-        this.displacement = (int) (tela.getAltura() * 0.08361204);
+        this.displacement = (int) (screen.getAltura() * 0.08361204);
 
         calculaPosicoesDeXeY();
 
@@ -62,11 +63,11 @@ public class Bricks {
 
 
     private void calculaPosicoesDeXeY() {
-        this.espacoTotalEmBranco = tela.getLargura() * 0.15;
+        this.espacoTotalEmBranco = screen.getLargura() * 0.15;
 //        Log.d(TAG, "Bricks: espacoTotalEmBranco=" + espacoTotalEmBranco);
         this.espacoEmBranco = (int) (espacoTotalEmBranco / 8);
 //        Log.d(TAG, "Bricks: espacoEmBranco=" + espacoEmBranco);
-        espacoTotalPreenchido = tela.getLargura() - espacoTotalEmBranco;
+        espacoTotalPreenchido = screen.getLargura() - espacoTotalEmBranco;
 //        Log.d(TAG, "Bricks: espacoTotalPreenchido=" + espacoTotalPreenchido);
         espacoPreenchido = (int) (espacoTotalPreenchido / 7);
 //        Log.d(TAG, "Bricks: espacoPreenchido=" + espacoPreenchido);
@@ -125,9 +126,9 @@ public class Bricks {
         //Log.d(TAG, "populaLinhas: bolinha=" + bolinha);
         for (int i = 0; i < 7; i++) {
             if (i == pi[bolinha]){
-                linhasDeBricks.get(0).add(new Brick(i, 0, bricksInvisiveis[i], fase, true));
+                linhasDeBricks.get(0).add(new Brick(i, 0, bricksInvisiveis[i], fase, true, screen));
             }else {
-                linhasDeBricks.get(0).add(new Brick(i, 0, bricksInvisiveis[i], fase, false));
+                linhasDeBricks.get(0).add(new Brick(i, 0, bricksInvisiveis[i], fase, false, screen));
             }
         }
     }
@@ -141,7 +142,7 @@ public class Bricks {
                 for (int j = 0; j < 7; j++) {
                     Brick b = linhasDeBricks.get(linhaAnterior).get(j);
 //                    Log.d(TAG, "transfereLinha=" + linhaAnterior + ", para=" + i + ", b[" + j + "].isInvisible=" + b.isInvisible());
-                    colunaDeBricks.add(new Brick(j, i, b.isInvisible(), b.getHitPoints(), b.isBolinha()));
+                    colunaDeBricks.add(new Brick(j, i, b.isInvisible(), b.getHitPoints(), b.isBolinha(), screen));
                 }
                 linhasDeBricks.get(linhaAnterior).clear();
             }

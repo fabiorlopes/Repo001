@@ -1,10 +1,8 @@
 package br.com.frlnrl.brickballplus;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import br.com.frlnrl.brickballplus.engine.Game;
 import butterknife.BindView;
@@ -38,7 +36,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
-        game.pausar();
+        game.pause();
         super.onPause();
     }
 }
