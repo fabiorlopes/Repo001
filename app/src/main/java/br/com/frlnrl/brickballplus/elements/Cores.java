@@ -1,9 +1,9 @@
 package br.com.frlnrl.brickballplus.elements;
 
+import static android.graphics.Paint.Style.STROKE;
+
 import android.graphics.Color;
 import android.graphics.Paint;
-
-import static android.graphics.Paint.Style.STROKE;
 
 /**
  * Created by Fabio on 20/10/2017.

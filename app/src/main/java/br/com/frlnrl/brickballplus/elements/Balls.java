@@ -3,11 +3,12 @@ package br.com.frlnrl.brickballplus.elements;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.frlnrl.brickballplus.engine.Controles;
-import br.com.frlnrl.brickballplus.engine.Tela;
+import br.com.frlnrl.brickballplus.engine.Screen;
 
 /**
  * Created by Fabio on 25/10/2017.
@@ -15,7 +16,7 @@ import br.com.frlnrl.brickballplus.engine.Tela;
 
 public class Balls {
     private static final String TAG = "Balls";
-    private final Tela tela;
+    private final Screen screen;
     private final float yLabelQtdBolinhas;
     private float xLabelQtdBolinhas;
     private Bricks bricks;
@@ -29,13 +30,14 @@ public class Balls {
     private int shouldAddBall;
     private final Controles controles;
     private Paint corDaBolinha;
+    private boolean desenhaPlusBall;
 
-    public Balls(Tela tela, Bricks bricks, Controles controles) {
-        this.tela = tela;
+    public Balls(Screen screen, Bricks bricks, Controles controles) {
+        this.screen = screen;
         this.bricks = bricks;
         this.controles = controles;
         for (int i = 0; i < numeroDeBolas; i++) {
-            balls.add(new Ball(tela, this));
+            balls.add(new Ball(screen, this));
         }
         yLabelQtdBolinhas = balls.get(0).getOriginalY() - 32;
         xLabelQtdBolinhas = balls.get(0).getX();
@@ -43,7 +45,7 @@ public class Balls {
     }
 
     public void desenhaNo(Canvas canvas) {
-        canvas.drawText("x" + String.valueOf(balls.size()), xLabelQtdBolinhas, yLabelQtdBolinhas, corDaBolinha);
+        canvas.drawText("x" + balls.size(), xLabelQtdBolinhas, yLabelQtdBolinhas, corDaBolinha);
         for (Ball ball : balls) {
             ball.desenhaNo(canvas);
         }
@@ -57,11 +59,6 @@ public class Balls {
 
     public void comecaComXBolas(int qtd) {
         numeroDeBolas = qtd;
-    }
-
-    public void adicionaNovaBolaNaFila() {
-        shouldAddBall++;
-        //balls.add(new Ball(tela, this));
     }
 
     public void speedUp(){
@@ -104,9 +101,14 @@ public class Balls {
         }
     }
 
+    public void adicionaNovaBolaNaFila() {
+        shouldAddBall++;
+        desenhaPlusBall = true;
+    }
+
     public void adicionaNovasBolasDefinitivo() {
         while (shouldAddBall > 0){
-            balls.add(new Ball(tela, this, xBallLider));
+            balls.add(new Ball(screen, this, xBallLider));
             numeroDeBolas++;
             shouldAddBall--;
         }

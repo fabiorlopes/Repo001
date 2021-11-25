@@ -3,9 +3,10 @@ package br.com.frlnrl.brickballplus.elements;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.UUID;
+
+import br.com.frlnrl.brickballplus.engine.Screen;
 
 /**
  * Created by Fabio on 22/10/2017.
@@ -25,6 +26,8 @@ public class Brick {
     private final Paint corAnimacaoBolinha;
 
     private static final String TAG = "Brick";
+    private final int displacement;
+    private final int alturaDaTela;
 
     private boolean bolinha;
 
@@ -47,8 +50,10 @@ public class Brick {
     private int countOfAnimation;
     private Rect smallRect;
     public static int totalHits;
+    private boolean fallingBall;
+    private final Screen screen;
 
-    Brick(int coluna, int linha, boolean invisible, int hitpoints, boolean bolinha) {
+    Brick(int coluna, int linha, boolean invisible, int hitpoints, boolean bolinha, Screen sc) {
         this.bolinha = bolinha;
         this.id = UUID.randomUUID();
         this.cor = Cores.getCorRect();
@@ -62,6 +67,9 @@ public class Brick {
         this.invisible = invisible;
         this.hitPoints = hitpoints;
         this.corTexto = Cores.getCorTextoRect();
+        this.screen = sc;
+        this.displacement = (int) (screen.getAltura() * 0.08361204);
+        this.alturaDaTela = screen.getAlturaTabuleiro() + displacement;
 
         if (linha < 7) {
             this.x1 = Bricks.posicaoX[coluna * 2];
@@ -103,19 +111,33 @@ public class Brick {
             canvas.drawText(s, x2 - 70, y2 - 35, corTexto);
         } else if (bolinha) {
             if (countOfAnimation > 30 && countOfAnimation <= 40) {
-                canvas.drawCircle((((x2 - x1) / 2) + x1), (((y2 - y1) / 2) + y1), 28, corAnimacaoBolinha);
+                canvas.drawCircle((((x2 - x1) / 2f) + x1), (((y2 - y1) / 2f) + y1), 28, corAnimacaoBolinha);
                 if (countOfAnimation == 40) countOfAnimation = 0;
             } else if (countOfAnimation > 20 && countOfAnimation <= 30) {
-                canvas.drawCircle((((x2 - x1) / 2) + x1), (((y2 - y1) / 2) + y1), 32, corAnimacaoBolinha);
+                canvas.drawCircle((((x2 - x1) / 2f) + x1), (((y2 - y1) / 2f) + y1), 32, corAnimacaoBolinha);
             } else if (countOfAnimation > 10 && countOfAnimation <= 20) {
-                canvas.drawCircle((((x2 - x1) / 2) + x1), (((y2 - y1) / 2) + y1), 28, corAnimacaoBolinha);
+                canvas.drawCircle((((x2 - x1) / 2f) + x1), (((y2 - y1) / 2f) + y1), 28, corAnimacaoBolinha);
             } else {
-                canvas.drawCircle((((x2 - x1) / 2) + x1), (((y2 - y1) / 2) + y1), 24, corAnimacaoBolinha);
+                canvas.drawCircle((((x2 - x1) / 2f) + x1), (((y2 - y1) / 2f) + y1), 24, corAnimacaoBolinha);
             }
             countOfAnimation++;
-            canvas.drawCircle((((x2 - x1) / 2) + x1), (((y2 - y1) / 2) + y1), 16, corBolinha);
+            canvas.drawCircle((((x2 - x1) / 2f) + x1), (((y2 - y1) / 2f) + y1), 16, corBolinha);
             //canvas.drawRect(getSmallRect(), corRectTop);
+        } else if (fallingBall){ //bolinha extra, cai reta
+            float fbY = (((y2 - y1) / 2.0f) + y1);
+            float fbX = (((x2 - x1) / 2.0f) + x1);
+            canvas.drawCircle(fbX, fbY , 16, cor);
+            if (y2 >= alturaDaTela){
+                chegouNoChao();
+            }else{
+                y2 += 20;
+                y1 += 20;
+            }
         }
+    }
+
+    private void chegouNoChao() {
+
     }
 
     public void destroy() {
@@ -207,8 +229,11 @@ public class Brick {
         return bolinha;
     }
 
-    public void setBolinha(boolean bolinha) {
-        this.bolinha = bolinha;
+    public void setBolinha(boolean trueOrFalse) {
+        this.bolinha = trueOrFalse;
+        if (!trueOrFalse){
+            fallingBall = true;
+        }
     }
 
     public Rect getSmallRect() {
